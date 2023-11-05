@@ -1,78 +1,69 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Starter Kit",
+  "name": "Trase.Dev Documentation",
   "logo": {
     "dark": "/logo/dark.svg",
     "light": "/logo/light.svg"
   },
   "favicon": "/favicon.svg",
   "colors": {
-    "primary": "#0D9373",
-    "light": "#07C983",
-    "dark": "#0D9373",
+    "primary": "#00a6ff",
+    "light": "#076bc9",
+    "dark": "#00a6ff",
     "anchors": {
-      "from": "#0D9373",
-      "to": "#07C983"
+      "from": "#00a6ff",
+      "to": "#076bc9"
     }
   },
   "topbarLinks": [
     {
-      "name": "Support",
-      "url": "mailto:hi@mintlify.com"
+      "name": "Store",
+      "url": "https://trase.dev/"
     }
   ],
   "topbarCtaButton": {
-    "name": "Dashboard",
-    "url": "https://dashboard.mintlify.com"
+    "name": "Support",
+    "url": "https://discord.gg/trase"
   },
-  "tabs": [
-    {
-      "name": "API Reference",
-      "url": "api-reference"
-    }
-  ],
-  "anchors": [
-    {
-      "name": "Documentation",
-      "icon": "book-open-cover",
-      "url": "https://mintlify.com/docs"
-    },
-    {
-      "name": "Community",
-      "icon": "slack",
-      "url": "https://mintlify.com/community"
-    },
-    {
-      "name": "Blog",
-      "icon": "newspaper",
-      "url": "https://mintlify.com/blog"
-    }
-  ],
+  "tabs": [],
+  "anchors": [],
   "navigation": [
     {
       "group": "Get Started",
-      "pages": ["introduction", "quickstart", "development"]
+      "pages": ["introduction", "terms-of-service", "escrow"]
     },
     {
-      "group": "Essentials",
-      "pages": ["essentials/markdown", "essentials/code", "essentials/images", "essentials/settings", "essentials/navigation"]
-    },
-    {
-      "group": "API Documentation",
-      "pages": ["api-reference/introduction"]
-    },
-    {
-      "group": "Endpoint Examples",
+      "group": "Paid Resources",
       "pages": [
-        "api-reference/endpoint/get",
-        "api-reference/endpoint/create",
-        "api-reference/endpoint/delete"
+        {
+          "group": "Donation System",
+          "icon": "wallet",
+          "pages": [
+            "paidresources/donation/getting-started",
+            "paidresources/donation/configuration-guide",
+            "paidresources/donation/package-guide",
+            "paidresources/donation/common-issues"
+          ]
+        },
+        {
+          "group": "Drug Dealer",
+          "icon": "cannabis",
+          "pages": [
+            "paidresources/dealer/getting-started",
+            "paidresources/dealer/configuration-guide",
+            "paidresources/dealer/rank-guide",
+            "paidresources/dealer/drug-guide",
+            "paidresources/dealer/common-issues"
+          ]
+        }
       ]
     }
   ],
   "footerSocials": {
-    "twitter": "https://twitter.com/mintlify",
-    "github": "https://github.com/mintlify",
-    "linkedin": "https://www.linkedin.com/company/mintsearch"
+    "twitter": "https://twitter.com/ImTrase",
+    "github": "https://github.com/ImTrase",
+    "website": "https://docs.trase.dev/",
+    "discord": "https://discord.gg/trase",
+    "youtube": "https://www.youtube.com/channel/UCsahVicuUGGJOB8ISnzeOLQ",
   }
 }
