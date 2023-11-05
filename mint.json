@@ -55,6 +55,22 @@
             "paidresources/dealer/drug-guide",
             "paidresources/dealer/common-issues"
           ]
+        },
+        {
+          "group": "Lootboxes",
+          "icon": "box-archive",
+          "pages": [
+            "paidresources/lootboxes/getting-started",
+            "paidresources/lootboxes/config-guide"
+          ]
+        },
+        {
+          "group": "Mining",
+          "icon": "gem",
+          "pages": [
+            "paidresources/mining/getting-started",
+            "paidresources/mining/config-guide"
+          ]
         }
       ]
     }

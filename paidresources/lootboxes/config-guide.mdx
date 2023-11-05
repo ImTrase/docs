@@ -1,0 +1,39 @@
+---
+title: 'Configuration Guide'
+description: 'This is where you will find all the documentation covering the configuration for our script, if you need anything that is not a configurable option do not hesitate to reach out to use via [discord](https://discord.gg/trase)!'
+icon: 'pencil'
+---
+
+### Configuration Guide
+#### Crate Options:
+- **label:** ``string``
+- **image:** ``string``
+    - This is the image name you put in `web/images/crates`.
+- **rewards:** ``table``
+    - label: `string`
+    - item: `string`
+    - amount: `integer`
+    - tier: `string`
+        - The color of the bottom part in the "selection ui".
+        - Acceptable tiers: `legendary, rare, common, uncommon`.
+- **requirments:** ``table``
+    - item: `string`
+    - amount: `integer`
+    - label: `string`
+
+
+## Example:
+```lua config.lua
+{
+    label = 'Awesome Crate', -- The name of the crate, this will be displayed in the menu
+    image = 'aweomse', -- The file name located in web/images/crates
+    rewards = { -- The rewards (items) the players gets
+        { label = 'Money', item = 'money', amount = 1000000, tier = 'rare' },
+        { label = 'Armor', item = 'armor', amount = 100, tier = 'common' },
+    },
+    requirments = { -- The item requrments to open the crate
+        { item = 'awesomekey', amount = 1, label = 'Awesome Crate Key' },
+        { item = 'money', amount = 1000, label = 'Money ($1000)' },
+    }
+},
+```
