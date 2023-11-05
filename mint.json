@@ -73,6 +73,46 @@
           ]
         }
       ]
+    },
+    {
+      "group": "Free Resources",
+      "pages": [
+        {
+          "group": "Discord API",
+          "icon": "discord",
+          "pages": [
+            "freeresources/discord/getting-started",
+            "freeresources/discord/config-guide",
+            {
+              "group": "Usage",
+              "icon": "file-export",
+              "pages": [
+                "freeresources/discord/usage/getAvatar",
+                "freeresources/discord/usage/getRoles",
+                "freeresources/discord/usage/getUser",
+                "freeresources/discord/usage/getUsername",
+                "freeresources/discord/usage/hasRole"
+              ]
+            }
+          ]
+        },
+        {
+          "group": "Anti-Modded Money",
+          "icon": "sack-xmark",
+          "pages": [
+            "freeresources/antimoney/getting-started",
+            "freeresources/antimoney/config-guide"
+          ]
+        },
+        {
+          "group": "Ped Menu",
+          "icon": "horse-head",
+          "pages": [
+            "freeresources/pedmenu/getting-started",
+            "freeresources/pedmenu/config-guide"
+          ]
+        }
+      ]
     }
   ],
   "footerSocials": {
