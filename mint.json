@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Trase.Dev Docs",
+  "name": "Docs",
   "logo": {
     "dark": "/logo/dark.svg",
     "light": "/logo/light.svg"
@@ -30,7 +30,11 @@
   "navigation": [
     {
       "group": "Get Started",
-      "pages": ["introduction", "terms-of-service", "escrow"]
+      "pages": [
+        "introduction",
+        "terms-of-service",
+        "escrow"
+      ]
     },
     {
       "group": "Paid Resources",
