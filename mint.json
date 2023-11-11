@@ -75,6 +75,15 @@
             "paidresources/mining/getting-started",
             "paidresources/mining/config-guide"
           ]
+        },
+        {
+          "group": "Store Robbery",
+          "icon": "store",
+          "pages": [
+            "paidresources/storerobbery/getting-started",
+            "paidresources/storerobbery/config-guide",
+            "paidresources/storerobbery/common-issues"
+          ]
         }
       ]
     },
