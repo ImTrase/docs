@@ -65,7 +65,9 @@
           "icon": "box-archive",
           "pages": [
             "paidresources/lootboxes/getting-started",
-            "paidresources/lootboxes/config-guide"
+            "paidresources/lootboxes/config-guide",
+            "paidresources/lootboxes/crate-config-guide",
+            "paidresources/lootboxes/common-issues"
           ]
         },
         {

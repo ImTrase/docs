@@ -1,0 +1,57 @@
+---
+title: 'Crate Configuration'
+description: 'This is where you can find the detailed documentation on how to setup the lootboxes.'
+icon: 'boxes-stacked'
+---
+
+### Configuration Guide
+#### Crate Options:
+- **text:** ``string``
+- **image?:** ``string``
+    - This is the image you need to upload to imgur or discord then copy the link.
+- **border?:** ``string``
+- **hoverColor?:** ``string``
+- **item?:** ``string``
+- **requirements:** ``table``
+    - tier: `string`
+    - item: `string`
+    - itemLabel: `string`
+    - amount: `integer`
+    - tier: `string`
+        - For requirements this should always be set to requirement.
+        - Acceptable tiers: `requirement`.
+- **rewards:** ``table``
+    - tier: `string`
+        - This will determine the odds of receiving the item.
+        - Acceptable tiers: `legendary, rare, common, uncommon`.
+    - item: `string`
+    - amount: `integer`
+    - itemLabel: `string`
+
+
+## Example:
+```lua config.lua
+{
+    text = 'Legendary', -- This will display when selecting the crate.
+    image = 'https://imgur.com/siLz0Wa.png', -- If Config.UseableItems is set to true, you can remove this line
+    color = 'linear-gradient(158deg, #D24C00 8.96%, #6A2600 85.48%)', -- If Config.UseableItems is set to true, you can remove this line
+    border = '0.7px solid #FFBD80', -- If Config.UseableItems is set to true, you can remove this line
+    hoverColor = '#804719', -- If Config.UseableItems is set to true, you can remove this line
+    -- item = 'legendary_key', -- If you want to use an item to open the crate, uncomment this line and change the item to the item you want to use (make sure Config.UseableItems is set to true)
+    requirements = { -- The required items to open the crate
+        { tier = 'requirement', item = 'legendary_key', itemLabel = 'Legendary Key', amount = '1' },
+    },
+    rewards = { -- The possible rewards to reveive when opening the crate
+        { tier = 'legendary', item = 'WEAPON_ASSAULTRIFLE', itemLabel = 'Assault Rifle', amount = '1' },
+        { tier = 'legendary', item = 'WEAPON_CARBINERIFLE', itemLabel = 'Carbine Rifle', amount = '1' },
+        { tier = 'epic', item = 'WEAPON_APPISTOL', itemLabel = 'AP Pistol', amount = '1' },
+        { tier = 'epic', item = 'WEAPON_MINISMG', itemLabel = 'Mini SMG', amount = '1' },
+        { tier = 'rare', item = 'ammo-rifle', itemLabel = 'Rifle Ammo', amount = '250' },
+        { tier = 'rare', item = 'WEAPON_COMBATPISTOL', itemLabel = 'Combat Pistol', amount = '1' },
+        { tier = 'common', item = 'ammo-9', itemLabel = 'Pistol Ammo', amount = '75' },
+        { tier = 'common', item = 'WEAPON_PISTOL', itemLabel = 'Pistol', amount = '1' },
+        { tier = 'uncommon', item = 'water', itemLabel = 'Water', amount = '5' },
+        { tier = 'uncommon', item = 'apple', itemLabel = 'Apple', amount = '25' },
+    },
+},
+```

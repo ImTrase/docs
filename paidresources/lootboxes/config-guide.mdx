@@ -4,36 +4,72 @@ description: 'This is where you will find all the documentation covering the con
 icon: 'pencil'
 ---
 
-### Configuration Guide
-#### Crate Options:
-- **label:** ``string``
-- **image:** ``string``
-    - This is the image name you put in `web/images/crates`.
-- **rewards:** ``table``
-    - label: `string`
-    - item: `string`
-    - amount: `integer`
-    - tier: `string`
-        - The color of the bottom part in the "selection ui".
-        - Acceptable tiers: `legendary, rare, common, uncommon`.
-- **requirments:** ``table``
-    - item: `string`
-    - amount: `integer`
-    - label: `string`
+## Configuration Guide
 
+<Warning>
+**Warning:** Ensure to review the *Crate Configuration* section for guidance on configuring lootboxes.
+</Warning>
 
-## Example:
-```lua config.lua
-{
-    label = 'Awesome Crate', -- The name of the crate, this will be displayed in the menu
-    image = 'aweomse', -- The file name located in web/images/crates
-    rewards = { -- The rewards (items) the players gets
-        { label = 'Money', item = 'money', amount = 1000000, tier = 'rare' },
-        { label = 'Armor', item = 'armor', amount = 100, tier = 'common' },
-    },
-    requirments = { -- The item requrments to open the crate
-        { item = 'awesomekey', amount = 1, label = 'Awesome Crate Key' },
-        { item = 'money', amount = 1000, label = 'Money ($1000)' },
-    }
-},
+### Framework Selection
+This is where you can choose your framework, recommended to just leave this on "auto".
+```lua Config.lua
+Config.Framework = 'auto' -- (type: string)
+```
+
+### Spinning Sound Toggle
+This is where you can enable the sound for when selecting a reward. If you want to change the sound you can replace the MP3 file, but doing so without knowledge of react could break the script.
+```lua Config.lua
+Config.EnableSpinningSound = true -- (type: boolean)
+```
+
+### Useable Items Option
+This is where you can enable/disable the option to disable the UI selection and make it where you use items to open lootboxes.
+Enabled = No UI, Useable Items | Disabled = UI Enabled
+```lua Config.lua
+Config.UseableItems = true -- (type: boolean)
+```
+
+### Command to Open UI
+If the UI is enabled this is the command used to open it.
+```lua Config.lua
+Config.Command = 'lootbox' -- (type: string)
+```
+
+### UI Color Customization
+This is where you can change the colors of the UI, only change this if you have prior or minmial knowledge in CSS.
+```lua Config.lua
+Config.UI = { -- (type: table)
+    Sidebar = 'linear-gradient(150deg, #0038FF -3.19%, rgba(0, 0, 0, 0.50) 62.7%)',  -- (type: string)
+    Main = 'linear-gradient(130deg, #0038FF -3.19%, rgba(0, 0, 0, 0.50) 62.7%)',  -- (type: string)
+}
+```
+
+### Item Rarity Odds
+Adjust the odds for different item rarities. Ensure that the sum of all odds equals 1.0.
+<Warning>
+**Warning:** The sum of all rarity odds must exactly equal 1.0.
+</Warning>
+```lua Config.lua
+Config.RarityOdds = { -- (type: table)
+    ['legendary'] = 0.07, -- (type: integer)
+    ['epic'] = 0.1, -- (type: integer)
+    ['rare']  = 0.13, -- (type: integer)
+    ['uncommon'] = 0.2, -- (type: integer)
+    ['common'] = 0.5, -- (type: integer)
+}
+```
+
+### Customizing Text Elements
+Modify text elements within the UI, notifications, and more.
+```lua Config.lua
+Config.Strings = {...}
+```
+
+### Notification System Configuration
+Customize the notification system to integrate with various server frameworks. The default is set to ox_lib.
+- param: A table with 3 values (data.type, data.title, data.description)
+```lua Config.lua
+Config.Notification = function(data)
+    lib.notify(data)
+end
 ```
