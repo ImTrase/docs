@@ -86,6 +86,15 @@
             "paidresources/storerobbery/config-guide",
             "paidresources/storerobbery/common-issues"
           ]
+        },
+        {
+          "group": "Food Delivery",
+          "icon": "burger",
+          "pages": [
+            "paidresources/food_delivery/getting-started",
+            "paidresources/food_delivery/config-guide",
+            "paidresources/food_delivery/common-issues"
+          ]
         }
       ]
     },
