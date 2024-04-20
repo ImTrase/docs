@@ -61,13 +61,12 @@
           ]
         },
         {
-          "group": "Lootboxes",
-          "icon": "box-archive",
+          "group": "Drug System",
+          "icon": "prescription-bottle",
           "pages": [
-            "paidresources/lootboxes/getting-started",
-            "paidresources/lootboxes/config-guide",
-            "paidresources/lootboxes/crate-config-guide",
-            "paidresources/lootboxes/common-issues"
+            "paidresources/drugs/getting-started",
+            "paidresources/drugs/config-guide",
+            "paidresources/drugs/common-issues"
           ]
         },
         {
