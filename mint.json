@@ -134,6 +134,14 @@
             "freeresources/pedmenu/getting-started",
             "freeresources/pedmenu/config-guide"
           ]
+        },
+        {
+          "group": "Garage System",
+          "icon": "car",
+          "pages": [
+            "freeresources/garage/getting-started",
+            "freeresources/garage/config-guide"
+          ]
         }
       ]
     }

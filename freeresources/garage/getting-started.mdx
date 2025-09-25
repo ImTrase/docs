@@ -1,0 +1,169 @@
+---
+title: 'Getting Started'
+description: 'A free FiveM Garage System to easily store and retrieve owned vehicles.'
+icon: 'circle-info'
+---
+
+# Trase Garage - Installation Guide
+
+A comprehensive garage system for FiveM servers supporting ESX, QBCore, and QBX frameworks.
+
+## Features
+
+- **Multi-framework support** - ESX, QBCore, and QBX with automatic detection
+- **Vehicle storage and retrieval** - Store and retrieve owned vehicles at garage locations
+- **Interactive browsing system** - Preview vehicles before retrieving them
+- **Impound system** - Vehicle impounding with configurable retrieval fees
+- **Multi-language support** - English, French, and Spanish included
+- **Configurable locations** - Easy setup of garage and impound locations
+- **Map blips** - Optional blips for garages and impounds
+- **Database integration** - MySQL support for vehicle tracking
+
+## Requirements
+
+### Dependencies
+- **ox_lib** - Required for UI, callbacks, and utility functions
+- **mysql-async** - Required for database operations
+- **Framework** - One of the following:
+  - ESX Legacy (es_extended)
+  - QBCore (qb-core)
+  - QBX (qbx-core)
+
+### Database Requirements
+Your server must have the appropriate vehicle tables based on your framework:
+
+#### ESX Framework
+```sql
+-- Table: owned_vehicles
+-- Required columns: owner, plate, vehicle, stored, parking
+```
+
+#### QBCore/QBX Framework  
+```sql
+-- Table: player_vehicles
+-- Required columns: citizenid, plate, mods, state, garage
+```
+
+## Installation Steps
+
+### 1. Download and Extract
+```bash
+# Download the resource and extract to your resources folder
+[trase]/
+└── trase_garage/
+    ├── fxmanifest.lua
+    ├── config.lua
+    ├── client/
+    ├── server/
+    ├── framework/
+    └── locales/
+```
+
+### 2. Install Dependencies
+Ensure the following resources are installed and started **before** trase_garage:
+
+```lua
+-- In your server.cfg, make sure these are started first:
+ensure oxmysql
+ensure ox_lib
+ensure [your_framework] -- es_extended, qb-core, or qbx-core
+```
+
+### 3. Database Setup
+No additional database setup is required. The script uses your existing framework's vehicle tables.
+
+### 4. Configuration
+Please visit [Configuration Guide](/freeresources/garage/config-guide)
+
+## Usage
+
+### For Players
+
+#### Storing Vehicles
+1. Drive your vehicle to a garage location
+2. Look for the blue storage marker
+3. Press `E` when prompted to store the vehicle
+4. The vehicle will be safely stored in the garage
+
+#### Retrieving Vehicles
+1. Walk to a garage entrance marker
+2. Press `E` to open the garage
+3. Use arrow keys (← →) to browse your stored vehicles
+4. Press `Enter` to retrieve the selected vehicle
+5. Press `Backspace` to cancel browsing
+
+#### Impound System
+1. Go to an impound location
+2. Press `E` to view impounded vehicles  
+3. Browse and select the vehicle to retrieve
+4. Pay the impound fee to get your vehicle back
+
+### For Administrators
+
+#### Adding New Garages
+1. Open `config.lua`
+2. Add a new entry to `Config.Garages`
+3. Set the entrance, browse, and storage coordinates
+4. Restart the resource
+
+#### Setting Impound Locations
+1. Configure `Config.Impound.Locations`
+2. Set the retrieval price in `Config.Impound.Price`
+3. Enable/disable with `Config.Impound.Enabled`
+
+## Localization
+
+The script supports multiple languages. To add a new language:
+
+1. Create a new file in `locales/` (e.g., `de.json` for German)
+2. Copy the structure from `en.json`
+3. Translate all text strings
+4. The script will automatically detect and use the locale
+
+## Troubleshooting
+
+### Common Issues
+
+#### Script Not Loading
+- Ensure all dependencies are installed and started first
+- Check console for error messages
+- Verify fxmanifest.lua is not corrupted
+
+#### Database Errors
+- Confirm your framework's vehicle table exists
+- Check MySQL connection string in server.cfg
+- Verify table column names match your framework
+
+#### Vehicles Not Appearing
+- Ensure vehicles are properly stored in database
+- Check vehicle state/stored column values
+- Verify player ownership in database
+
+#### Framework Not Detected
+```lua
+-- Manually set framework in config.lua if auto-detection fails
+Config.Framework = 'esx' -- or 'qb', 'qbx'
+```
+
+### Debug Mode
+Enable debug prints by checking server console for framework detection messages:
+```
+[Trase_Garage] [INFO]: ESX framework detected and set.
+```
+
+## Support
+
+For additional support:
+- **Discord**: https://discord.gg/trase
+- **Issues**: Check server console for error messages
+- **Updates**: Visit the Discord for script updates
+
+## Version Information
+- **Script Version**: Latest
+- **Compatible Frameworks**: ESX Legacy, QBCore, QBX
+- **Dependencies**: ox_lib, mysql-async
+- **License**: Check license file for terms
+
+---
+
+*This script was created by Trase. For more scripts and updates, visit our Discord community.*

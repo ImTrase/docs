@@ -1,0 +1,445 @@
+---
+title: 'Configuration Guide'
+description: 'This is where you will find all the documentation covering the configuration for our script, if you need anything that is not a configurable option do not hesitate to reach out to use via [discord](https://discord.gg/trase)!'
+icon: 'pencil'
+---
+
+# Trase Garage - Configuration Guide
+
+Complete configuration reference for customizing your garage system to fit your server's needs.
+
+## Overview
+
+The Trase Garage system is highly configurable, allowing you to customize everything from garage locations to visual elements. All configuration is done through the `config.lua` file.
+
+## Basic Configuration
+
+### Framework Settings
+
+```lua
+Config.Framework = 'auto' -- Options: 'auto', 'esx', 'qb', 'qbx'
+```
+
+**Options:**
+- `'auto'` - Automatically detect the framework (recommended)
+- `'esx'` - Force ESX Legacy framework
+- `'qb'` - Force QBCore framework  
+- `'qbx'` - Force QBX framework
+
+### Visual Settings
+
+```lua
+Config.DrawDistance = 25.0 -- Distance to draw markers and show interactions
+```
+
+**Configuration:**
+- **Range:** `10.0` - `50.0` (recommended: `25.0`)
+- **Lower values** = Better performance, shorter interaction range
+- **Higher values** = Longer interaction range, more resource usage
+
+## Garage Configuration
+
+### Adding Garage Locations
+
+```lua
+Config.Garages = {
+    ['Legion'] = {
+        Enter = vec3(215.1587, -809.5308, 30.7485),
+        Browse = vec4(230.8425, -795.6925, 30.5864, 161.3799),
+        Store = vec3(214.6054, -792.4926, 30.8434)
+    },
+    ['PillboxHill'] = {
+        Enter = vec3(-330.01, -780.33, 33.96),
+        Browse = vec4(-334.73, -746.32, 33.97, 118.29),
+        Store = vec3(-336.31, -756.89, 33.97)
+    }
+}
+```
+
+### Garage Location Parameters
+
+#### Enter (Required)
+```lua
+Enter = vec3(x, y, z)
+```
+- **Purpose:** Garage entrance marker location
+- **Interaction:** Players walk here to browse vehicles
+- **Marker:** Blue cylinder marker appears here
+
+#### Browse (Required)  
+```lua
+Browse = vec4(x, y, z, heading)
+```
+- **Purpose:** Vehicle preview and spawn location
+- **Interaction:** Where vehicles appear during browsing
+- **Heading:** Direction the vehicle faces when spawned
+- **Note:** Player is teleported here during browsing
+
+#### Store (Optional)
+```lua
+Store = vec3(x, y, z)
+```
+- **Purpose:** Vehicle storage marker location
+- **Interaction:** Players drive here to store vehicles
+- **Marker:** Blue cylinder marker appears here
+- **Note:** If not specified, vehicles can only be retrieved
+
+### Finding Coordinates
+
+Use these methods to get coordinates for your garage locations:
+
+#### Method 1: In-Game Commands
+```lua
+-- Add to your server for testing (remove after setup)
+RegisterCommand('coords', function(source)
+    local ped = GetPlayerPed(source)
+    local coords = GetEntityCoords(ped)
+    local heading = GetEntityHeading(ped)
+    print(string.format("vec3(%.2f, %.2f, %.2f)", coords.x, coords.y, coords.z))
+    print(string.format("vec4(%.2f, %.2f, %.2f, %.2f)", coords.x, coords.y, coords.z, heading))
+end)
+```
+
+#### Method 2: Online Coordinate Tools
+- Use FiveM coordinate websites
+- Stand at desired location and copy coordinates
+- Adjust Z-coordinate as needed for ground level
+
+### Garage Naming Conventions
+
+```lua
+Config.Garages = {
+    ['LegionSquare'] = { ... },     -- PascalCase recommended
+    ['PillboxHill'] = { ... },      -- No spaces or special characters  
+    ['SandyShores'] = { ... },      -- Keep names descriptive
+    ['PaletoBay'] = { ... }         -- Avoid numbers/symbols
+}
+```
+
+## Impound System Configuration
+
+### Basic Impound Settings
+
+```lua
+Config.Impound = {
+    Enabled = true,        -- Enable/disable entire impound system
+    Price = 2500,          -- Cost to retrieve impounded vehicles
+    Locations = {
+        ['Hayes Auto'] = {
+            Enter = vec3(484.0731, -1312.2666, 29.2153),
+            Browse = vec4(490.5146, -1313.6351, 29.2581, 304.4655)
+        }
+    }
+}
+```
+
+### Impound Parameters
+
+#### Enabled
+```lua
+Enabled = true  -- or false
+```
+- `true` - Impound system is active
+- `false` - Impound system is disabled completely
+
+#### Price
+```lua
+Price = 2500  -- Amount in server currency
+```
+- **Range:** `0` - `999999`
+- **Currency:** Based on your framework (ESX: money, QB: cash/bank)
+- **Set to 0** for free impound retrieval
+
+#### Payment Priority
+1. **Cash first** - Attempts to pay with cash
+2. **Bank second** - Uses bank money for remaining amount
+3. **Insufficient funds** - Shows error if player can't afford
+
+### Adding Impound Locations
+
+```lua
+Config.Impound = {
+    Enabled = true,
+    Price = 2500,
+    Locations = {
+        ['Hayes Auto'] = {
+            Enter = vec3(484.0731, -1312.2666, 29.2153),
+            Browse = vec4(490.5146, -1313.6351, 29.2581, 304.4655)
+        },
+        ['Downtown Impound'] = {
+            Enter = vec3(-234.73, -1184.11, 23.04),
+            Browse = vec4(-225.28, -1174.82, 23.04, 270.0)
+        }
+    }
+}
+```
+
+**Note:** Impound locations only need `Enter` and `Browse` coordinates (no Store location).
+
+## Blip Configuration
+
+### Garage Blips
+
+```lua
+Config.Blips = {
+    Garages = {
+        Enabled = true,        -- Show garage blips on map
+        Sprite = 357,          -- Blip icon sprite ID
+        Color = 3,             -- Blip color ID
+        Scale = 0.7,           -- Blip size (0.5 - 2.0)
+        Name = 'Garage'        -- Blip label text
+    }
+}
+```
+
+### Impound Blips
+
+```lua
+Config.Blips = {
+    Impounds = {
+        Enabled = true,        -- Show impound blips on map
+        Sprite = 524,          -- Blip icon sprite ID  
+        Color = 47,            -- Blip color ID (red/orange)
+        Scale = 0.7,           -- Blip size
+        Name = 'Impound'       -- Blip label text
+    }
+}
+```
+
+### Blip Customization Options
+
+#### Sprite IDs (Common Options)
+```lua
+-- Garage sprites
+Sprite = 357  -- Garage icon (recommended)
+Sprite = 50   -- Garage alternative
+Sprite = 356  -- Car icon
+
+-- Impound sprites  
+Sprite = 524  -- Impound truck (recommended)
+Sprite = 68   -- Tow truck
+Sprite = 446  -- Warning triangle
+```
+
+#### Color IDs (Common Options)
+```lua
+-- Garage colors
+Color = 3   -- Light blue (recommended)
+Color = 38  -- Dark blue  
+Color = 11  -- Purple
+
+-- Impound colors
+Color = 47  -- Orange/red (recommended)
+Color = 6   -- Red
+Color = 17  -- Dark red
+```
+
+#### Scale Options
+```lua
+Scale = 0.5   -- Very small
+Scale = 0.7   -- Default (recommended)
+Scale = 1.0   -- Normal size
+Scale = 1.5   -- Large
+Scale = 2.0   -- Very large
+```
+
+## Advanced Configuration
+
+### Marker Customization
+
+While not directly configurable in config.lua, you can modify marker appearance in the client script:
+
+```lua
+-- In client/client.lua, look for drawMarkerAt function
+local function drawMarkerAt(pos, scale)
+    DrawMarker(
+        1,                    -- Marker type (cylinder)
+        pos.x, pos.y, pos.z - 0.98,  -- Position
+        0,0,0,                -- Direction
+        0,0,0,                -- Rotation  
+        scale.x, scale.y, scale.z,    -- Scale
+        0,153,255,140,        -- RGBA color (blue with transparency)
+        false,false,2,false,nil,nil,false
+    )
+end
+```
+
+### Interaction Distances
+
+```lua
+-- In client/client.lua
+local enterRadius = 1.6        -- Distance to interact with garage entrance
+local storeEnterRadius = 3.0   -- Distance to interact with storage
+```
+
+### Marker Scales
+
+```lua
+-- In client/client.lua  
+local markerScale = vec3(0.9,0.9,0.9)        -- Regular garage markers
+local storeMarkerScale = vec3(4.0,4.0,0.4)   -- Storage markers (wider, flatter)
+```
+
+## Example Complete Configuration
+
+```lua
+-----------------------------------------------------
+---- Trase Garage Configuration File ----------------
+-----------------------------------------------------
+Config = {}
+
+-- Framework Settings
+Config.Framework = 'auto' -- 'auto', 'esx', 'qb', 'qbx'
+Config.DrawDistance = 25.0
+
+-- Blip Settings
+Config.Blips = {
+    Garages = {
+        Enabled = true,
+        Sprite = 357,
+        Color = 3,
+        Scale = 0.7,
+        Name = 'Garage'
+    },
+    Impounds = {
+        Enabled = true,
+        Sprite = 524,
+        Color = 47,
+        Scale = 0.7,  
+        Name = 'Impound'
+    }
+}
+
+-- Garage Locations
+Config.Garages = {
+    ['Legion'] = {
+        Enter = vec3(215.1587, -809.5308, 30.7485),
+        Browse = vec4(230.8425, -795.6925, 30.5864, 161.3799),
+        Store = vec3(214.6054, -792.4926, 30.8434)
+    },
+    ['PillboxHill'] = {
+        Enter = vec3(-330.01, -780.33, 33.96),
+        Browse = vec4(-334.73, -746.32, 33.97, 118.29),
+        Store = vec3(-336.31, -756.89, 33.97)
+    },
+    ['SandyShores'] = {
+        Enter = vec3(1737.59, 3710.2, 34.14),
+        Browse = vec4(1722.66, 3713.74, 34.21, 22.28),
+        Store = vec3(1713.33, 3707.88, 34.21)
+    }
+}
+
+-- Impound System
+Config.Impound = {
+    Enabled = true,
+    Price = 2500,
+    Locations = {
+        ['Hayes Auto'] = {
+            Enter = vec3(484.0731, -1312.2666, 29.2153),
+            Browse = vec4(490.5146, -1313.6351, 29.2581, 304.4655)
+        },
+        ['Sandy Shores Impound'] = {
+            Enter = vec3(1642.81, 3806.45, 35.05),
+            Browse = vec4(1651.56, 3803.94, 35.37, 217.32)
+        }
+    }
+}
+```
+
+## Configuration Best Practices
+
+### Location Planning
+- **Space out garages** - Avoid placing too close together
+- **Consider traffic** - Place in accessible but not crowded areas
+- **Test thoroughly** - Spawn vehicles to ensure adequate space
+- **Mind obstacles** - Avoid lamp posts, barriers, or buildings
+
+### Performance Optimization
+- **Limit garage count** - More garages = more resource usage
+- **Optimize draw distance** - Lower values improve performance
+- **Strategic placement** - Focus on high-traffic areas
+
+### Balance Considerations
+- **Impound pricing** - Balance cost vs. punishment
+- **Garage accessibility** - Make garages reasonably accessible
+- **Storage locations** - Ensure players can safely park
+
+## Testing Your Configuration
+
+### Pre-Launch Checklist
+1. **Verify coordinates** - All locations are accessible
+2. **Test all interactions** - Store, retrieve, and browse work
+3. **Check blip placement** - Blips appear correctly on map
+4. **Confirm framework detection** - Check console logs
+5. **Test with multiple players** - Ensure no conflicts
+
+### Common Configuration Errors
+
+#### Invalid Coordinates
+```lua
+-- Wrong: Missing decimals
+Enter = vec3(215, -809, 30)
+
+-- Correct: Proper precision  
+Enter = vec3(215.1587, -809.5308, 30.7485)
+```
+
+#### Missing Required Parameters
+```lua
+-- Wrong: Missing Browse location
+['Garage1'] = {
+    Enter = vec3(215.16, -809.53, 30.75)
+    -- Browse is required!
+}
+
+-- Correct: All required parameters
+['Garage1'] = {
+    Enter = vec3(215.16, -809.53, 30.75),
+    Browse = vec4(230.84, -795.69, 30.59, 161.38)
+}
+```
+
+#### Syntax Errors
+```lua
+-- Wrong: Missing commas
+Config.Garages = {
+    ['Legion'] = {
+        Enter = vec3(215.16, -809.53, 30.75)
+        Browse = vec4(230.84, -795.69, 30.59, 161.38)  -- Missing comma above
+    }
+}
+
+-- Correct: Proper syntax
+Config.Garages = {
+    ['Legion'] = {
+        Enter = vec3(215.16, -809.53, 30.75),
+        Browse = vec4(230.84, -795.69, 30.59, 161.38)
+    }
+}
+```
+
+## Troubleshooting Configuration Issues
+
+### Markers Not Appearing
+- Check `Config.DrawDistance` value
+- Verify coordinate accuracy
+- Ensure resource is properly restarted
+
+### Blips Not Showing
+- Confirm `Enabled = true` in blip configuration
+- Check sprite and color IDs are valid
+- Restart resource after configuration changes
+
+### Framework Not Detected
+- Verify framework resource is running
+- Check console for detection messages
+- Try manual framework setting
+
+### Performance Issues
+- Reduce `Config.DrawDistance`
+- Limit number of garage locations
+- Optimize marker update frequency
+
+---
+
+*For additional support with configuration, visit our Discord: https://discord.gg/trase*
