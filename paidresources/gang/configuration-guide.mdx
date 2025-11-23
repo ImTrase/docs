@@ -1,0 +1,147 @@
+---
+title: 'Configuration Guide'
+description: 'This is where you will find all the documentation covering the configuration for our script, if you need anything that is not a configurable option do not hesitate to reach out to use via [discord](https://discord.gg/trase)!'
+icon: 'pencil'
+---
+
+This page documents the `Config` options for Trase_Gangs (see `config.lua`), what they do, and how to modify them safely.
+
+> Quick tip: always make a backup of `config.lua` before making changes in production.
+
+---
+
+## Top-level settings
+
+- `Config.Language` (string)
+  - Default: `'en'`
+  - Which locale file to use from `locales/` (e.g., `en.lua`, `fr.lua` if present). Change to match your supported language.
+
+- `Config.Debug` (boolean)
+  - Default: `false`
+  - When `true` the resource prints verbose debug messages to the server console. Useful while setting up or diagnosing issues.
+
+- `Config.InteractionType` (string)
+  - Default: `'ox_lib'`
+  - Set which interaction system the client uses. Supported values: `ox_lib` or `ox_target` (choose whichever you have installed).
+
+- `Config.Framework` (string)
+  - Default: `'auto'`
+  - Auto-detects supported frameworks (ESX / QBCore / QBox / Standalone). Change only if you want to explicitly set the framework (e.g. `'ESX'` or `'QBCore'`).
+
+---
+
+## Commands (Config.Commands)
+
+These are the chat/console commands users and admins can call. Change keys to customize command names:
+
+- `GangManage` — default `gangmanage` (opens gang management UI for users in a gang)
+- `ServerManagement` — default `gangs` (admin-only server management UI)
+- `GangLeaderboard` — default `gangleaderboard` (opens leaderboard UI)
+
+Example: to change the leaderboard command to `/leaderboard`, edit:
+```lua
+Config.Commands.GangLeaderboard = 'leaderboard'
+```
+
+---
+
+## Handler config (Config.Handler)
+
+Controls core gang handling and defaults.
+
+- `DefaultMaxMembers` (number) — default `10`
+  - Default maximum members for newly-created gangs.
+
+- `DefaultMaxRanks` (number) — default `5`
+  - Default rank slots created for new gangs.
+
+- `InviteExpiryTime` (number) — default `3600` (seconds)
+  - How long invites remain valid before expiring (seconds).
+
+- `ReputationEnabled` (boolean) — default `true`
+  - Toggle reputation system.
+
+- `ReputationRewards` (table)
+  - Numeric reputation rewards for various victory types (Turf, Drugzone, GangWar). Example:
+  ```lua
+  ReputationRewards = { TurfWin = 100, DrugzoneWin = 75, GangWarWin = 150 }
+  ```
+
+- `UnlocksEnabled` (boolean) — default `true`
+  - Allow gangs to purchase unlocks (e.g., storage upgrades, member slots).
+
+- `Unlocks` (table) — a map of unlock keys to cost and label, e.g.:
+  ```lua
+  Unlocks = {
+    storage_upgrade_1 = { cost = 500, label = 'Storage Upgrade Tier 1' },
+    member_slots_1 = { cost = 750, label = '+5 Member Slots' },
+  }
+  ```
+
+Adjust costs/labels based on your economy.
+
+---
+
+## Features (Config.Features)
+
+Each feature block toggles subsystems and config options.
+
+### Drugzones
+- `Enabled` (boolean) — Enable the drugzone game type.
+- `Duration` (seconds) — How long a drugzone event runs.
+- `WinningPoints` (number) — Points needed for a win.
+- `PointsPerSecond` (number) — Points accumulated per second when in control.
+- `MarkerType` (number) & `MarkerColor` (table) — Visual markers.
+- `Zones` (table) — Named zones that include `coords` (vector3/vec3), `radius`, optional NPC spawn data, and `KillRewards` table.
+
+Example zone config snippet in `config.lua`:
+```lua
+Zones = {
+  ['Testing Zone'] = {
+    coords = vector3(398.6851, -1996.0840, 22.1991),
+    radius = 50.0,
+    NPC = { model = 's_m_m_chemsec_01', coords = vector4(...), scenario = 'WORLD_HUMAN_GUARD_PATROL' },
+    KillRewards = { Enabled = true, Rewards = { [1] = {label='First Kill', rewards = {['money'] = 5000}} } }
+  }
+}
+```
+
+### Turfs
+- `Enabled` (boolean) — Enable turf zones.
+- `Duration` (seconds) — How long the turf capture takes.
+- `Zones` — Similar to Drugzones, zones for turfs.
+- `KillRewards` — Optional kill-based reward tiers.
+
+### GangWars
+- `Enabled` (boolean) — Enable gang-wars subsystem.
+- `KillFeed` (boolean) — Show kill feed related to wars.
+- `MinWager` / `MaxWager` — Min/max betting values for wagers between gangs.
+- `TargetKills` — Kills required to win a gang war.
+
+### Leaderboards
+- `Enabled` (boolean) — Toggle leaderboard systems (server UI & NUI support).
+
+---
+
+## UI (Config.UI)
+
+Controls the NUI appearance and colors. Example values are hex color strings used across the web UI.
+
+- `Colors` — A table of color keys used in the front-end (bg_dark, bg_panel, accent, danger, text_primary, border etc.). Edit them to theme the UI. Example:
+```lua
+Config.UI.Colors.accent = '#3b82f6'
+```
+
+> Tip: You can replace the color palette to quickly switch the theme (a red theme example is included as commented-out code in `config.lua`).
+
+---
+
+## Notes / Safety
+
+- Changing `DefaultMaxMembers`/`DefaultMaxRanks` affects newly created gangs only; existing gangs keep their saved values in the DB.
+- If you disable a feature (e.g., `Config.Features.Drugzones.Enabled = false`) the module won't be loaded at startup.
+- Always restart the resource after making changes to `config.lua` for them to apply.
+
+---
+
+If you'd like I can convert this into inline comments inside `config.lua` or add a sample `server.cfg` snippet in a separate `EXTRA.md` file. Want me to add either?

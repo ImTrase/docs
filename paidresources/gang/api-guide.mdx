@@ -1,0 +1,157 @@
+---
+title: 'API'
+description: 'This is where you will find all the documentation covering the configuration for our script, if you need anything that is not a configurable option do not hesitate to reach out to use via [discord](https://discord.gg/trase)!'
+icon: 'code'
+---
+
+# Trase_Gangs — API Reference
+
+This page documents the server exports, client exports, callbacks, events, and NUI interfaces exposed by **Trase_Gangs**, allowing any external resource to integrate smoothly.
+
+---
+
+## Server Exports
+
+### `GetHandler()`
+Returns the main server Handler instance.
+
+```lua
+local gh = exports['trase_gangs']:GetHandler()
+local allGangs = gh:GetAllGangs()
+```
+
+### `GetServerHandler()`
+Alias of `GetHandler()`.
+
+---
+
+## Client Exports
+
+### `GetClientHandler()`
+Returns the client Handler for reading gang state and utilities.
+
+```lua
+local handler = exports['trase_gangs']:GetClientHandler()
+print(handler:GetCurrentGang())
+```
+
+---
+
+## Server Callbacks (`lib.callback.register`)
+
+All callbacks use `lib.callback` unless stated otherwise.
+
+- `trase_gangs:server:getPlayerGang`
+- `trase_gangs:server:hasPermission`
+- `trase_gangs:server:admin:createGang`
+- `trase_gangs:server:admin:deleteGang`
+- `trase_gangs:server:admin:updateGangSettings`
+- `trase_gangs:server:admin:updateGangStash`
+- `trase_gangs:server:admin:getAllGangs`
+- `trase_gangs:server:getGangDataForUI`
+- `trase_gangs:server:inviteMember`
+- `trase_gangs:server:kickMember`
+- `trase_gangs:server:setMemberRank`
+- `trase_gangs:server:updateGangInfo`
+- `trase_gangs:server:saveRank`
+- `trase_gangs:server:deleteRank`
+- `trase_gangs:server:reorderRank`
+- `trase_gangs:server:getMemberStats`
+- `trase_gangs:server:getAuditLogs`
+- `trase_gangs:server:acceptInvite`
+- `trase_gangs:server:declineInvite`
+- `trase_gangs:server:getPendingInvites`
+- `trase_gangs:server:leaveGang`
+- `trase_gangs:server:getOnlineMembers`
+- `trase_gangs:server:getLeaderboard`
+- `trase_gangs:server:getLeaderboards`
+
+### Module-Specific
+- `trase_gangs:turfs:checkActive`
+- `trase_gangs:turfs:start`
+
+---
+
+## Client Events (Server → Client)
+
+- `trase_gangs:client:openDashboard`
+- `trase_gangs:client:openServerManagement`
+- `trase_gangs:client:openLeaderboard`
+- `trase_gangs:client:gangUpdated`
+- `trase_gangs:client:gangRemoved`
+- `trase_gangs:client:inviteReceived`
+- `trase_gangs:client:playerLoaded`
+- `trase_gangs:client:serverReady`
+
+---
+
+## NUI Callbacks
+
+### General UI
+- `dashboard:closeUI`
+- `serverManagement:closeUI`
+- `notify`
+
+### Server Management
+- `serverManagement:createGang`
+- `serverManagement:deleteGang`
+- `serverManagement:updateGang`
+- `serverManagement:placeStash`
+
+### Rank Management
+- `createRank`
+- `updateRankPermissions`
+- `renameRank`
+- `deleteRank`
+- `reorderRank`
+- `refreshGangData`
+- `getAuditLogs`
+- `getNearbyPlayers`
+- `inviteMember`
+
+### Gang Wars
+- `getGangWarData`
+- `sendGangWarInvite`
+- `acceptGangWarRequest`
+- `declineGangWarRequest`
+- `cancelGangWarInvite`
+
+### Leaderboards
+- `leaderboard:getAll`
+- `leaderboard:closeUI`
+- `fetchTheme`
+
+---
+
+## NUI → Client Messages (`SendNUIMessage`)
+
+- `dashboard:open`
+- `serverManagement:open`
+- `serverManagement:updateGangs`
+- `serverManagement:notify`
+- `serverManagement:gangCreated`
+- `leaderboard:open`
+
+---
+
+## Commands
+
+- `Config.Commands.GangManage`
+- `Config.Commands.ServerManagement`
+- `Config.Commands.GangLeaderboard`
+- `/setgang`
+- `/leavegang`
+
+---
+
+## Example Integrations
+
+### Show Gang Name in Another Script
+```lua
+local handler = exports['trase_gangs']:GetClientHandler()
+local gang = handler:GetCurrentGang()
+
+if gang then
+    print(('Player gang: %s (%s)'):format(gang.label, gang.id))
+end
+```

@@ -70,29 +70,12 @@
           ]
         },
         {
-          "group": "Mining",
-          "icon": "gem",
+          "group": "Gang System",
+          "icon": "people-group",
           "pages": [
-            "paidresources/mining/getting-started",
-            "paidresources/mining/config-guide"
-          ]
-        },
-        {
-          "group": "Store Robbery",
-          "icon": "store",
-          "pages": [
-            "paidresources/storerobbery/getting-started",
-            "paidresources/storerobbery/config-guide",
-            "paidresources/storerobbery/common-issues"
-          ]
-        },
-        {
-          "group": "Food Delivery",
-          "icon": "burger",
-          "pages": [
-            "paidresources/food_delivery/getting-started",
-            "paidresources/food_delivery/config-guide",
-            "paidresources/food_delivery/common-issues"
+            "paidresources/gang/getting-started",
+            "paidresources/gang/configuration-guide",
+            "paidresources/gang/api-guide"
           ]
         }
       ]
